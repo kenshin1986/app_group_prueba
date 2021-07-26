@@ -28,11 +28,13 @@ npm install
 
 
 ## Documentación 📋
-https://apirestonegroup.herokuapp.com/doc/#/
+
 
 
 ## Despliegue 📦
-
+https://app-group-prueba.vercel.app/products
+user de prueba: manuelyivanrc@ufps.edu.co
+pass: 1234
 Para construir el proyecto ejecutar
 
 npm build
