@@ -32,12 +32,11 @@ const getters = reactive({
 
 const actions = {
 
-  async getProduct(product: Product) {
-    state.currentProduct = product
+  async getProduct(product?: Product) {
+    state.currentProduct = product || {}
   },
-
-  async productList($limit: number, $skip: number) {
-    const response: any = await Request.getProducts($limit, $skip)
+  async productList($limit: number, $skip: number, search?: string) {
+    const response: any = await Request.getProducts($limit, $skip, search)
     if (response.error) {
       state.error = response.error.message
       return
@@ -55,9 +54,24 @@ const actions = {
     state.error = ''
     state.products = response
   },
+  async updateProduct(_id: string, name: string, price: number, image: string, score: number, description: string) {
+    const response: any = await Request.updateProduct(_id, name, price, image, score, description)
+    if (response.error) {
+      state.error = response.error.message
+      return
+    }
+    state.error = ''
+    state.products = response
+  },
 
-  async deleteProduct() {
-    return []
+  async deleteProduct(_id: string) {
+    const response = await Request.deleteProduct(_id)
+    if (response.error) {
+      state.error = response.error.message
+      return
+    }
+    state.error = ''
+    state.products = response
   },
 
 

@@ -14,7 +14,6 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "jest"
     ],
     "paths": {
       "@/*": [
@@ -34,7 +33,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/components/FormRegistre.vue"  ],
+, "src/components/FormRegistre.vue", "src/views/ProductList.vue"  ],
   "exclude": [
     "node_modules"
   ]

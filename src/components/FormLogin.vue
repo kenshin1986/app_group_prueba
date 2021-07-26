@@ -1,82 +1,74 @@
 <template v-if="!userStore.getters.isLoggedIn">
-    <div class="wrapper fadeInDown mt-5">
-      <div id="formContent">
-        <!-- Tabs Titles -->
+  <div class="wrapper fadeInDown mt-5">
+    <div id="formContent">
+      <!-- Tabs Titles -->
 
-        <!-- Icon -->
-        <div class="fadeIn first ">
-          <img src="@/assets/log_in.png" id="icon" alt="User Icon" />
-        </div>
-
-        <!-- Login Form -->
-        <form @submit.prevent="onSubmit">
-          <input
-            type="email"
-            class="fadeIn second"
-            name="email"
-            placeholder="Email"
-            v-model="form.email"
-            required
-          />
-          <input
-            type="password"
-            class="fadeIn third"
-            name="password"
-            placeholder="Contraseña"
-            v-model="form.password"
-            required
-          />
-          <input type="submit" class="fadeIn fourth" value="Sing in" />
-        </form>
-                 <div class="alert alert-danger" role="alert" v-if="userStore.state.error">
-                   {{userStore.state.error}}
-                </div>
+      <!-- Icon -->
+      <div class="fadeIn first ">
+        <img src="@/assets/log_in.png" id="icon" alt="User Icon" />
       </div>
+
+      <!-- Login Form -->
+      <form @submit.prevent="onSubmit">
+        <input
+          type="email"
+          class="fadeIn second"
+          name="email"
+          placeholder="Email"
+          v-model="form.email"
+          required
+        />
+        <input
+          type="password"
+          class="fadeIn third"
+          name="password"
+          placeholder="Password"
+          v-model="form.password"
+          required
+        />
+        <input type="submit" class="fadeIn fourth" value="Sing in" />
+      </form>
+      <div class="alert alert-danger" role="alert" v-if="userStore.state.error">
+        {{ userStore.state.error }}
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
-import userStore from "@/stores/user";
-import router from "@/router";
+import { defineComponent, reactive } from "vue"
+import userStore from "@/stores/user"
+import router from "@/router"
+// import swal from "sweetalert";
 
 export default defineComponent({
   setup() {
     if (localStorage.getItem("token")) {
-      userStore.getUser();
-      router.push("products");
+      userStore.getUser()
+      router.push("products")
     }
     const form = reactive({
       email: "",
       password: "",
     });
     const onSubmit = () => {
-      userStore.login(form.email, form.password);
-      form.email = "";
-      form.password = "";
-    };
-
-    return { form, userStore, onSubmit };
+      userStore.login(form.email, form.password)
+    }
+    return { form, userStore, onSubmit }
   },
-});
+})
 </script>
 
 <style scoped>
 
 
-/* BASIC */
-
-html {
-  background-color: #56baed;
+.alert-danger{
+  margin-bottom: 20px;
+  background: rgb(226, 72, 24);
+  color: whitesmoke ;
 }
-
-body {
-  font-family: "Poppins", sans-serif;
-  height: 100vh;
-}
-
 a {
   color: #92badd;
-  display:inline-block;
+  display: inline-block;
   text-decoration: none;
   font-weight: 400;
 }
@@ -86,19 +78,17 @@ h2 {
   font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
-  display:inline-block;
-  margin: 40px 8px 10px 8px; 
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
   color: #cccccc;
 }
-
-
 
 /* STRUCTURE */
 
 .wrapper {
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   min-height: 100%;
@@ -114,8 +104,8 @@ h2 {
   max-width: 450px;
   position: relative;
   padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -128,8 +118,6 @@ h2 {
   border-radius: 0 0 10px 10px;
 }
 
-
-
 /* TABS */
 
 h2.inactive {
@@ -141,11 +129,11 @@ h2.active {
   border-bottom: 2px solid #5fbae9;
 }
 
-
-
 /* FORM TYPOGRAPHY*/
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -155,8 +143,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 5px 20px 40px 20px;
@@ -167,11 +155,15 @@ input[type=button], input[type=submit], input[type=reset]  {
   transition: all 0.3s ease-in-out;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
   background-color: #39ace7;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -179,7 +171,9 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=email], input[type=password] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -200,16 +194,14 @@ input[type=text], input[type=email], input[type=password] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type="text"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-input[type=text]:placeholder {
+input[type="text"]:placeholder {
   color: #cccccc;
 }
-
-
 
 /* ANIMATIONS */
 
@@ -250,23 +242,44 @@ input[type=text]:placeholder {
 }
 
 /* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 .fadeIn {
-  opacity:0;
-  -webkit-animation:fadeIn ease-in 1;
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
 
-  -webkit-animation-fill-mode:forwards;
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
-  -webkit-animation-duration:1s;
-  -moz-animation-duration:1s;
-  animation-duration:1s;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 .fadeIn.first {
@@ -309,21 +322,17 @@ input[type=text]:placeholder {
   color: #0d0d0d;
 }
 
-.underlineHover:hover:after{
+.underlineHover:hover:after {
   width: 100%;
 }
-
-
 
 /* OTHERS */
 
 *:focus {
-    outline: none;
-} 
-
-#icon {
-  width:60%;
+  outline: none;
 }
 
-
+#icon {
+  width: 60%;
+}
 </style>

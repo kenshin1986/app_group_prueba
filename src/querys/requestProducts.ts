@@ -17,7 +17,7 @@ const headers = {
  */
 export const createProduct = async (name: string, price: number, image: string, score: number, description: string) => {
     try {
-        const request = await axios.post(`${apiUrl}`, { name, price, image, score, description },{headers})
+        const request = await axios.post(`${apiUrl}`, { name, price, image, score, description }, { headers })
         return request.data
     } catch (error: any) {
         return { error: error.response.data }
@@ -32,7 +32,7 @@ export const createProduct = async (name: string, price: number, image: string, 
  */
 export const deleteProduct = async (_id: string) => {
     try {
-        const request = await axios.delete(`${apiUrl}/${_id}`,{headers})
+        const request = await axios.delete(`${apiUrl}/${_id}`, { headers })
         return request.data
     } catch (error: any) {
         return { error: error.response.data }
@@ -48,9 +48,9 @@ export const deleteProduct = async (_id: string) => {
  * @returns si la consulta correcta devuelve un objeto de productos y
  * si ocurre algun problema devuelve un error
  */
-export const getProducts = async ($limit?: number, $skip?: number) => {
+export const getProducts = async ($limit?: number, $skip?: number, search?: string) => {
     try {
-        const request = await axios.get(`${apiUrl}?$limit=${$limit}&$skip=${$skip}`,{headers})
+        const request = await axios.get(`${apiUrl}?$limit=${$limit}&$skip=${$skip}&name=${search || ''}`, { headers })
         return request.data
     } catch (error: any) {
         return { error: error.response.data }
@@ -64,12 +64,15 @@ export const getProducts = async ($limit?: number, $skip?: number) => {
  * @param price precio del producto
  * @param image url de la imagen del producto
  * @param score puntuacion del producto
+ * @param description descripción del producto
  * @returns si la consulta correcta devuelve producto y  
  * si no es correcta devuelve el error
  */
 export const updateProduct = async (_id: string, name: string, price: number, image: string, score: number, description: string) => {
+    const data: any = { name, price, image, score, description }
+    if (image === "") delete data?.image
     try {
-        const request = await axios.patch(`${apiUrl}/${_id}`, { name, price, image, score, description },{headers})
+        const request = await axios.patch(`${apiUrl}/${_id}`, data, { headers })
         return request.data
     } catch (error: any) {
         return { error: error.response.data }

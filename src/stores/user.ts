@@ -3,6 +3,7 @@ import * as Request from '@/querys/requestsUsers'
 import router from '@/router'
 import { User } from '@/types/user.interface'
 
+
 export interface UserState {
   user: Partial<User>;
   isLoggedIn: boolean;
@@ -43,7 +44,8 @@ const actions = {
     state.user = response.currentUser
     state.isLoggedIn = true
     state.error = ''
-    localStorage.token = response.token
+    localStorage.setItem('token', response.token)
+
     router.push("products");
     return true
   },

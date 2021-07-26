@@ -3,11 +3,14 @@
     <div class="logo">
       <img class="logo_img" src="@/assets/logo.jpg" id="icon" alt="User Icon" />
     </div>
-    <div  class="container-user" v-if="userStore.getters.isLoggedIn">
-     <img class="logo-user" src="@/assets/no-usuario.png" id="icon" alt="User" /> 
-      <button class="btn-logout"
-        @click="userStore.logout()"
-      >
+    <div class="container-user" v-if="userStore.getters.isLoggedIn">
+      <img
+        class="logo-user"
+        src="@/assets/no-usuario.png"
+        id="icon"
+        alt="User"
+      />
+      <button class="btn-logout" @click="userStore.logout()">
         Logout
       </button>
     </div>
@@ -19,15 +22,15 @@
 </template>
 
 <script>
-import userStore from "@/stores/user";
-import { defineComponent, onMounted } from "vue";
+import userStore from "@/stores/user"
+import { defineComponent, onMounted } from "vue"
 export default defineComponent({
   name: "App",
   setup() {
-    onMounted(userStore.getUser);
-    return { userStore };
+    onMounted(userStore.getUser)
+    return { userStore }
   },
-});
+})
 </script>
 <style>
 .menu {
@@ -46,29 +49,27 @@ export default defineComponent({
   margin-left: 30px;
 }
 
-.logo_img{
+.logo_img {
   margin-top: 13px;
   max-width: 80%;
 }
 
-.container-user{
+.container-user {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-right: -180px;
 }
 
-.logo-user{
+.logo-user {
   margin-top: 10px;
   margin-bottom: 5px;
   max-width: 6%;
   border-radius: 1px solid;
 }
 
-
-
 .btn-logout {
- max-width: 80px;
+  max-width: 80px;
 }
 
 .btn-logout:hover {
@@ -110,69 +111,20 @@ li.active {
   display: none;
 }
 
-ul.show {
-  top: 65px;
-  z-index: 100;
-}
 
 @media screen and (max-width: 952px) {
-  .logo {
-    font-size: 30px;
-    padding-left: 35px;
+  .logo_img {
+    margin-top: 7px;
+    max-width: 87%;
   }
   .menu_items li a {
     font-size: 16px;
   }
 }
 @media screen and (max-width: 858px) {
-  .menu {
-    height: 65px;
-  }
-
-  .btn_menu {
-    display: inline-block;
-  }
-  .menu_items {
-    position: fixed;
-    width: 100vw;
-    height: cal(100% - 65px);
-    background: #414141;
-    top: -100vh;
-    text-align: center;
-    transition: all 0.4s;
-    flex-direction: column;
-  }
-
-  .menu_items li {
-    margin: 30px 0 0 0;
-    line-height: 30px;
-  }
-
-  .menu_items li:hover {
-    background: none;
-  }
-  .menu_items li a {
-    font-size: 20px;
-    color: #fff;
-    font-weight: bold;
-  }
-  .menu_items li a:hover {
-    color: #e9183b;
-  }
-
-  .logo {
-    padding-left: 35px;
-    width: 10%;
-  }
-}
-
-@media screen and (max-width: 858px) and (orientation: landscape) {
-  .menu_items li {
-    margin: 5px 0 0 0;
-  }
-  .menu_items {
-    overflow: scroll;
-    height: cal(100% -65px);
+  .logo_img {
+    margin-top: 8px;
+    max-width: 90%;
   }
 }
 </style>

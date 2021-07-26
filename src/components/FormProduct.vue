@@ -1,4 +1,4 @@
-<template v-if="userStore.getters.isLoggedIn">
+<template v-if="state.isLoggedIn">
   <div class="wrapper fadeInDown ">
     <div id="formContent">
       <!-- Tabs Titles -->
@@ -9,106 +9,131 @@
           type="text"
           class="fadeIn second"
           name="name"
-          placeholder="Nombre"
+          placeholder="Name"
           v-model="form.name"
           required
         />
         <input
-          type="nummber"
+          type="number"
           class="fadeIn second"
           name="price"
-          placeholder="Precio"
+          placeholder="Price"
           v-model="form.price"
           required
         />
         <input
-          type="score"
+          type="number"
           class="fadeIn second"
           name="score"
           placeholder="Score"
           v-model="form.score"
-          required
-        />
-
-        <input
-          type="text"
-          class="fadeIn third"
-          name="image"
-          placeholder="Imagen"
-          v-model="form.image"
-          required
         />
 
         <input
           type="text"
           class="fadeIn third"
           name="description"
-          placeholder="Descripcion"
+          placeholder="Description"
           v-model="form.description"
-          required
         />
 
-        <input type="submit" class="fadeIn fourth" value="Sing Up" />
+        <input
+          type="file"
+          accept="image/*"
+          @change="upload($event)"
+          id="file-input"
+        />
+
+        <input v-if="!productStore.getters.currentProduct._id"
+         type="submit" class="fadeIn fourth" value="Create Product" />
+         <input v-if="productStore.getters.currentProduct._id"
+         type="submit" class="fadeIn fourth" value="Update Product" />
       </form>
-      <router-link class="fadeIn fourth" to="/singup">Sing Up</router-link>
-      <!-- Remind Passowrd
-                <div class="alert alert-danger" role="alert" v-if="error">
-                   {{error_msg}}
-                </div> -->
+      <router-link class="btn_link" to="/products">Product List</router-link>
+     
+              <div class="alert alert-danger" role="alert" v-if="productStore.getters.error">
+        {{ productStore.getters.error }}
+      </div> 
     </div>
   </div>
 </template>
+
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
-import userStore from "@/stores/user";
-import productStore from "@/stores/product";
-import router from "@/router";
-import numeral from "numeral";
+import { defineComponent, reactive } from "vue"
+import userStore from "@/stores/user"
+import productStore from "@/stores/product"
+import { uploadImage } from "@/querys/requestUpload"
+import router from "@/router"
+import numeral from "numeral"
 
 export default defineComponent({
-
   setup() {
-    if (localStorage.getItem("token")) {
-      userStore.getUser();
-      router.push("products");
-    }
+    const {
+      name,
+      price,
+      score,
+      image,
+      description,
+    } = productStore.getters.currentProduct;
+    console.log(price?.toString());
+    
     const form = reactive({
-      name:"",
-      price: '',
-      score: "",
-      image:"",
-      description: "",
+      name: name || "",
+      price: price?.toString() || "",
+      score: score?.toString() || "",
+      image: image || "",
+      description: description || "",
     });
-    const onSubmit = () => {
-      const { name, price,image, score, description} = form;
-      const newPrice = numeral(price).value() || 0
-      const newScore = numeral(score).value() || 0
-      productStore.createProduct(name, newPrice, image,newScore ,  description);
-      if (!productStore.getters.error) {
-          form.name = ""
-          form.price=""
-          form.score= ""
-          form.image=""
-          form.description= ""
+
+    const upload = async (event: any) => {
+      const response = await uploadImage(event)
+      if (!response.error) {
+        form.image = response.path;
       }
     };
+    const onSubmit = async () => {
+      const { name, price, image, score, description } = form
+      const newPrice = numeral(price).value() || 0
+      const newScore = numeral(score).value() || 0
+      if (productStore.getters.currentProduct._id) {
+        await productStore.updateProduct(
+          productStore.getters.currentProduct?._id || "",
+          name,
+          newPrice,
+          image,
+          newScore,
+          description
+        );
+        productStore.getProduct()
+      } else {
+        await productStore.createProduct(
+          name,
+          newPrice,
+          image,
+          newScore,
+          description
+        );
+      }
+      if (
+        !productStore.getters.error &&
+        !productStore.getters.currentProduct._id
+      ) {
+        router.push("/products");
+        form.name = ""
+        form.price = ""
+        form.image = ""
+        form.score = ""
+        form.description = ""
+      }
+    }
 
-    return { form, userStore, onSubmit };
+    return { form, userStore, onSubmit, upload, productStore }
   },
-});
+})
 </script>
 
 <style scoped>
 /* BASIC */
-
-html {
-  background-color: #56baed;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  height: 100vh;
-}
 
 a {
   color: #92badd;
@@ -379,5 +404,18 @@ input[type="text"]:placeholder {
 
 #icon {
   width: 30%;
+}
+
+.btn_link {
+  margin-bottom: 15px;
+  border-radius: 31px 31px 31px 31px;
+  -moz-border-radius: 31px 31px 31px 31px;
+  -webkit-border-radius: 31px 31px 31px 31px;
+  border: 1px solid #56baed;
+  padding: 4px;
+}
+.btn_link:hover {
+  background: #cccccc;
+  color: #0d0d0d;
 }
 </style>

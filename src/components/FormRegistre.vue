@@ -49,25 +49,24 @@
           <input type="submit" class="fadeIn fourth" value="Sing Up" />
         </form>
         <router-link class="fadeIn fourth" to="/singup">Sing Up</router-link>
-        <!-- Remind Passowrd
-                <div class="alert alert-danger" role="alert" v-if="error">
-                   {{error_msg}}
-                </div> -->
+        <div class="alert alert-danger" role="alert" v-if="userStore.state.error">
+        {{ userStore.state.error }}
+      </div>
       </div>
       
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
-import userStore from "@/stores/user";
-import router from "@/router";
+import { defineComponent, reactive } from "vue"
+import userStore from "@/stores/user"
+import router from "@/router"
 
 export default defineComponent({
  
   setup() {
     if (localStorage.getItem("token")) {
-      userStore.getUser();
-      router.push("products");
+      userStore.getUser()
+      router.push("products")
     }
     const form = reactive({
       lastName:"",
@@ -76,14 +75,14 @@ export default defineComponent({
       password: "",
     });
     const onSubmit = () => {
-      userStore.login(form.email, form.password);
-      form.email = "";
-      form.password = "";
-    };
+      userStore.login(form.email, form.password)
+      form.email = ""
+      form.password = ""
+    }
 
-    return { form, userStore, onSubmit };
+    return { form, userStore, onSubmit }
   },
-});
+})
 </script>
 
 <style scoped>

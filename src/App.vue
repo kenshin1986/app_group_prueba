@@ -10,7 +10,7 @@ import { defineComponent, onMounted } from 'vue'
 import userStore from '@/stores/user'
 import Nav from './components/Nav.vue'
 import Footer from './components/Footer.vue'
-//import router from '@/router'
+
 
 
 export default defineComponent({
