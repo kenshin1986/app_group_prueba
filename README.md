@@ -1,29 +1,44 @@
-# app_project
+# API REST DIGITAL
 
-## Project setup
-```
+Proyecto básico de App
+
+## Comenzando 🚀
+
+git clone https://github.com/Darklegion92/digitalsoluciones
+
+Mira **Deployment** para conocer como desplegar el proyecto.
+
+
+### Pre-requisitos 📋
+
+Tener instalado mongoDB o puedes descargarlo desde el siguiente enlace https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-5.0.0-signed.msi
+### Instalación 🔧
+
+En la raiz del directorio creado al clonar ejecutar lo sigueinte
+
+npm i
+ó
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+npm run dev
+## Ejecutando las pruebas ⚙️
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your unit tests
-```
-npm run test:unit
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Documentación 📋
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Ingresar al enlace http://localhost:3001/docs
+
+## Despliegue 📦
+
+Para construir el proyecto ejecutar
+
+npm build
+
+luego para iniciarlo ejecutar
+
+npm start
+## Autores ✒️
+
+
+**Manuel Yivan Rodriguez Carreño** - *Trabajo Inicial* 
