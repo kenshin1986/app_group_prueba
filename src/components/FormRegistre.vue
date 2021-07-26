@@ -75,7 +75,7 @@ export default defineComponent({
       password: "",
     });
     const onSubmit = () => {
-      userStore.login(form.email, form.password)
+      userStore.singup(form.email, form.password)
       form.email = ""
       form.password = ""
     }
