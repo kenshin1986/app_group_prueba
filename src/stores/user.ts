@@ -50,7 +50,7 @@ const actions = {
     return true
   },
 
-  async singUp(email: string, password: string, firstName: string, lastName: string) {
+  async singUp(email: string, password: string, lastName: string, firstName: string) {
     const response: any = await Request.singUp(email, password, lastName, firstName)
     if (response.error) {
       state.error = response.error
